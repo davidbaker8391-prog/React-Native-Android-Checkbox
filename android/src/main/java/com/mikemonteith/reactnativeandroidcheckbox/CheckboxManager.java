@@ -15,11 +15,22 @@ public class CheckboxManager extends SimpleViewManager<CheckBoxView> {
 
     private static final String REACT_CLASS = "Checkbox";
 
-    private static final CompoundButton.OnCheckedChangeListener checkedListener =
-            new CompoundButton.OnCheckedChangeListener(){
+    private CompoundButton.OnCheckedChangeListener checkedListener = null;
+    private ThemedReactContext mContext = null;
+    
+    public String getName(){
+        return REACT_CLASS;
+    }
+
+    @Override
+    public CheckBoxView createViewInstance(ThemedReactContext context){
+        mContext = context;
+        final CheckBoxView checkbox = new CheckBoxView(context);
+
+        checkedListener =  new CompoundButton.OnCheckedChangeListener(){
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    ReactContext reactContext = (ReactContext) ((ContextWrapper) buttonView.getContext()).getBaseContext();
+                    ReactContext reactContext = (ReactContext) mContext;
                     reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(
                             new CheckboxEvent(
                                     buttonView.getId(),
@@ -27,14 +38,6 @@ public class CheckboxManager extends SimpleViewManager<CheckBoxView> {
                 }
 
             };
-
-    public String getName(){
-        return REACT_CLASS;
-    }
-
-    @Override
-    public CheckBoxView createViewInstance(ThemedReactContext context){
-        final CheckBoxView checkbox = new CheckBoxView(context);
 
         checkbox.setOnCheckedChangeListener(checkedListener);
 
