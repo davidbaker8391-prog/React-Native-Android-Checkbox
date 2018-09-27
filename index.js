@@ -1,5 +1,5 @@
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 
 import {
   View,
@@ -36,17 +36,6 @@ class Checkbox extends Component {
     );
   }
 }
-
-Checkbox.propTypes = {
-  ...View.propTypes,
-
-  /**
-   * is the checkbox checked. Default false
-   */
-  value: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
-  tintColor: React.PropTypes.string,
-};
 
 Checkbox.defaultProps = {
   value: false,
